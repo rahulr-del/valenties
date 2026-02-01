@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Be My Valentine 💖</title>
+
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    background: radial-gradient(circle at top, #ffe6f0, #ffd6e8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    overflow: hidden;
+  }
+
+  .card {
+    background: white;
+    padding: 40px 30px;
+    border-radius: 26px;
+    text-align: center;
+    box-shadow: 0 25px 60px rgba(255, 105, 180, 0.3);
+    max-width: 340px;
+    width: 90%;
+    position: relative;
+    animation: pop 1s ease;
+  }
+
+  @keyframes pop {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  h1 {
+    color: #ff4d88;
+    font-size: 1.7rem;
+    margin-bottom: 10px;
+  }
+
+  .name {
+    font-size: 1.9rem;
+    font-weight: 600;
+    color: #ff4d88;
+    margin-bottom: 20px;
+    animation: glow 2s ease-in-out infinite alternate;
+  }
+
+  @keyframes glow {
+    from { text-shadow: 0 0 6px #ff9acb; }
+    to { text-shadow: 0 0 18px #ff4d88; }
+  }
+
+  .buttons {
+    margin-top: 30px;
+    position: relative;
+    height: 60px;
+  }
+
+  button {
+    border: none;
+    padding: 14px 26px;
+    font-size: 1rem;
+    border-radius: 999px;
+    cursor: pointer;
+    position: absolute;
+  }
+
+  #yes {
+    left: 0;
+    background: linear-gradient(90deg, #ff4d88, #ff7eb3);
+    color: white;
+    box-shadow: 0 10px 25px rgba(255, 77, 136, 0.5);
+  }
+
+  #no {
+    right: 0;
+    background: #f2f2f2;
+    color: #444;
+  }
+
+  /* Hearts */
+  .heart {
+    position: fixed;
+    font-size: 20px;
+    animation: floatUp 4s linear forwards;
+    pointer-events: none;
+  }
+
+  @keyframes floatUp {
+    from { transform: translateY(0) scale(0.8); opacity: 1; }
+    to { transform: translateY(-120vh) scale(1.4); opacity: 0; }
+  }
+
+  /* Roses */
+  .rose {
+    position: fixed;
+    font-size: 30px;
+    animation: bloom 3s ease forwards;
+    pointer-events: none;
+  }
+
+  @keyframes bloom {
+    from { transform: scale(0) rotate(0deg); opacity: 0; }
+    to { transform: scale(1.3) rotate(360deg); opacity: 1; }
+  }
+</style>
+</head>
+
+<body>
+
+<div class="card" id="card">
+  <h1>Will you be my Valentine?</h1>
+  <div class="name" id="name"></div>
+
+  <div class="buttons">
+    <button id="yes">Yes 💖</button>
+    <button id="no">No 🙈</button>
+  </div>
+</div>
+
+<script>
+  const HER_NAME = "Shreeya";
+
+  document.getElementById('name').textContent = HER_NAME;
+
+  const noBtn = document.getElementById('no');
+  const yesBtn = document.getElementById('yes');
+  const card = document.getElementById('card');
+
+  // Keep NO button inside screen
+  function moveNo() {
+    const padding = 20;
+    const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+    const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+
+    const x = Math.random() * maxX;
+    const y = Math.random() * maxY;
+
+    noBtn.style.left = x + 'px';
+    noBtn.style.top = y + 'px';
+  }
+
+  noBtn.addEventListener('mouseenter', moveNo);
+  noBtn.addEventListener('touchstart', moveNo);
+
+  yesBtn.addEventListener('click', () => {
+    card.innerHTML = `
+      <h1>Yayyy 💖</h1>
+      <div class="name">my loveeeeeeeeeee</div>
+      <p>You just made my heart bloom 🌹</p>
+    `;
+    startHearts();
+    startRoses();
+  });
+
+  function startHearts() {
+    const i = setInterval(() => {
+      const h = document.createElement('div');
+      h.className = 'heart';
+      h.textContent = '💖';
+      h.style.left = Math.random() * 100 + 'vw';
+      h.style.bottom = '-20px';
+      document.body.appendChild(h);
+      setTimeout(() => h.remove(), 4000);
+    }, 150);
+    setTimeout(() => clearInterval(i), 3000);
+  }
+
+  function startRoses() {
+    for (let i = 0; i < 14; i++) {
+      setTimeout(() => {
+        const r = document.createElement('div');
+        r.className = 'rose';
+        r.textContent = '🌹';
+        r.style.left = Math.random() * 100 + 'vw';
+        r.style.top = Math.random() * 100 + 'vh';
+        document.body.appendChild(r);
+        setTimeout(() => r.remove(), 3000);
+      }, i * 200);
+    }
+  }
+</script>
+
+</body>
+</html>
